@@ -1,0 +1,33 @@
+services:
+  stash:
+    build: .  # 使用自定义 Dockerfile
+    container_name: stash
+    restart: unless-stopped
+    ports:
+      - "9999:9999"
+    logging:
+      driver: "json-file"
+      options:
+        max-file: "10"
+        max-size: "2m"
+    environment:
+      - STASH_STASH=/data/
+      - STASH_GENERATED=/generated/
+      - STASH_METADATA=/metadata/
+      - STASH_CACHE=/cache/
+      - STASH_PORT=9999
+      - LIBVA_DRIVER_NAME=iHD            # 新增
+      - VAAPI_DEVICE=/dev/dri/renderD128 # 新增
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /opt/app/stash/etc/config:/root/.stash
+      - /mnt/data/cloud_media/cloud_nas/cd2/115/xshare/stash:/data
+      - /mnt/data2/stash/strm:/mnt/data2/stash/strm  
+      - /mnt/data2/stash/metadata:/metadata
+      - /mnt/data2/stash/cache:/cache
+      - /mnt/data2/stash/blobs:/blobs
+      - /mnt/data2/stash/generated:/generated
+    devices:
+      - '/dev/dri:/dev/dri'
+    group_add:
+      - 104  # 替换为宿主机的 render 组 ID
