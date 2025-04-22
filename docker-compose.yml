@@ -24,9 +24,9 @@ services:
 
     # 目录映射：宿主机目录:容器内目录
     volumes:
-      - '/media:/media'  # 媒体库或下载库路径
-      - '/moviepilot-v2/config:/config'  # moviepilot 的配置文件存放路径
-      - '/moviepilot-v2/core:/moviepilot/.cache/ms-playwright'  # 浏览器内核存放路径
+      - '/mnt/data2/mvp:/media'  # 媒体库或下载库路径
+      - '/opt/app/moviepilot/etc/config:/config'  # moviepilot 的配置文件存放路径
+      - '/opt/app/moviepilot/etc/core:/moviepilot/.cache/ms-playwright'  # 浏览器内核存放路径
       - '/var/run/docker.sock:/var/run/docker.sock:ro'  # 用于获取宿主机的docker管理权，一般用于UI页面重启或自动更新
 
     # 环境变量：- '变量名=值‘
